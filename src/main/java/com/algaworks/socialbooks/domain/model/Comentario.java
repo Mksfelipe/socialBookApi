@@ -1,9 +1,8 @@
 package com.algaworks.socialbooks.domain.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,22 +19,22 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Comentario {
-	
+
 	@Id
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String texto;
-	
+
 	private String usuario;
-	
+
+	private String texto;
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date data;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "livro_id_fk")
+	private LocalDate data;
+
 	@JsonIgnore
-	private Livro livro;
-	
+	@ManyToOne
+	@JoinColumn(name = "fk_id_livro", nullable = false)
+	private Comentario comentario;
+
 }

@@ -1,6 +1,8 @@
 package com.algaworks.socialbooks.domain.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,21 +27,22 @@ public class Livro {
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "nome_livro")
 	private String nome;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "data_publicacao")
 	private LocalDate dataPublicado;
-	
+
 	private String editora;
-	
+
 	private String resumo;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_autor")
 	private Autor autor;
-
+	
+	@OneToMany(mappedBy = "comentario")
+	private Set<Comentario> comentarios = new HashSet<Comentario>();
 }

@@ -30,8 +30,8 @@ public class Autor {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date nascimento;
 	
-	@OneToMany(mappedBy = "autor")
 	@JsonIgnore
+	@OneToMany(mappedBy = "autor")
 	private List<Livro> livros;
 
 }
