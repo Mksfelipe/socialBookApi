@@ -1,8 +1,7 @@
 package com.algaworks.socialbooks.domain.model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,6 +43,7 @@ public class Livro {
 	@JoinColumn(name = "id_autor")
 	private Autor autor;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "comentario")
-	private Set<Comentario> comentarios = new HashSet<Comentario>();
+	private List<Comentario> comentarios;
 }

@@ -2,6 +2,7 @@ package com.algaworks.socialbooks.api.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.socialbooks.api.DTO.LivroDto;
 import com.algaworks.socialbooks.domain.model.Livro;
 import com.algaworks.socialbooks.domain.service.LivroService;
 
@@ -24,14 +26,17 @@ public class LivrosController {
 	@Autowired
 	private LivroService livroService;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@GetMapping
 	public List<Livro> listar() {
 		return livroService.listar();
 	}
 	
 	@GetMapping("/{id}")
-	public Livro buscar(@PathVariable Long id) {
-		return livroService.buscarOuFalhar(id);
+	public LivroDto buscar(@PathVariable Long id) {
+		return convertToDto(livroService.buscarOuFalhar(id));
 	}
 	
 	@PostMapping
@@ -51,5 +56,10 @@ public class LivrosController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long id) {
 		livroService.excluir(id);
+	}
+	
+	private LivroDto convertToDto(Livro livro) {
+		LivroDto livroDto = modelMapper.map(livro, LivroDto.class);
+	    return livroDto;
 	}
 }

@@ -3,14 +3,15 @@ package com.algaworks.socialbooks.domain.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,9 +33,9 @@ public class Comentario {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate data;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "fk_id_livro", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_livro", nullable = false)
+	@JsonBackReference
 	private Comentario comentario;
 
 }
